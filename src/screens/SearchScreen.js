@@ -255,7 +255,7 @@ function SearchScreen() {
                     rating !== "all" ||
                     price !== "all" ? (
                       <Button
-                        variant="light"
+                        variant="primary"
                         onClick={() => navigate("/search")}
                       >
                         <i className="fas fa-times-circle"></i>
@@ -302,7 +302,7 @@ function SearchScreen() {
                   >
                     <Button
                       className={Number(page) === x + 1 ? "text-bold" : ""}
-                      variant="light"
+                      variant="primary"
                     >
                       {x + 1}
                     </Button>

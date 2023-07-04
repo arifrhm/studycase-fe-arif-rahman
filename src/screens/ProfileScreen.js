@@ -144,7 +144,7 @@ function ProfileScreen() {
           <div className="mt-3">
             <Button
               type="button"
-              variant="light"
+              variant="primary"
               onClick={() => {
                 navigate(`/updateshipping`);
               }}

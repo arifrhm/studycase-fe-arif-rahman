@@ -68,7 +68,7 @@ function CartScreen() {
                     </Col>
                     <Col md={3}>
                       <Button
-                        variant="light"
+                        variant="primary"
                         onClick={() =>
                           updateCartHandler(item, item.quantity - 1)
                         }
@@ -78,7 +78,7 @@ function CartScreen() {
                       </Button>{" "}
                       <span>{item.quantity}</span>{" "}
                       <Button
-                        variant="light"
+                        variant="primary"
                         onClick={() =>
                           updateCartHandler(item, item.quantity + 1)
                         }
@@ -90,7 +90,7 @@ function CartScreen() {
                     <Col md={3}>{idrFormat(item.price)}</Col>
                     <Col md={2}>
                       <Button
-                        variant="light"
+                        variant="primary"
                         onClick={() => removeItemHandler(item)}
                       >
                         <i className="fas fa-trash"></i>

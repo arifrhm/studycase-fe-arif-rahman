@@ -57,7 +57,7 @@ const Product = (props) => {
         ></Rating>
         <Card.Text>{idrFormat(product.price)}</Card.Text>
         {product.countInStocke === 0 ? (
-          <Button variant="light" disabled>
+          <Button variant="primary" disabled>
             Habis
           </Button>
         ) : (

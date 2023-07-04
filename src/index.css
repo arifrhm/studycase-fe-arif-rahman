@@ -14,12 +14,12 @@ main{
   flex: 1;
 }
 .btn-primary, .btn-outline-primary{
-  background-color: #da6608;
+  background-color: #404040;
   color: white;
 }
 .btn-primary:hover, .btn-outline-primary:hover{
   background-color: #fffefd;
-  color: #da6608;
+  color: #2e3e9b;
 }
 
 .linkon {
