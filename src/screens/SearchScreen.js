@@ -1,20 +1,23 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useCallback } from 'react';
 import LoadingBox from '../components/LoadingBox';
 import axios from 'axios';
 
-const SearchScreen = ({ query }) => {
+const SearchScreen = () => {
   const initialState = {
     loading: true,
     error: '',
-    results: [],
+    data: [], // Renamed 'results' to 'data' for consistency
   };
+
+  const searchParams = new URLSearchParams(document.location.search);
+  const query = searchParams.get('query');
 
   const reducer = (state, action) => {
     switch (action.type) {
       case 'FETCH_REQUEST':
         return { ...state, loading: true };
       case 'FETCH_SUCCESS':
-        return { ...state, loading: false, results: action.payload.data };
+        return { ...state, loading: false, data: action.payload.data }; // Renamed 'results' to 'data'
       case 'FETCH_FAIL':
         return { ...state, loading: false, error: action.payload };
       default:
@@ -24,21 +27,20 @@ const SearchScreen = ({ query }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/products/search?query=${query}`);
-        const data = response.data;
-        dispatch({ type: 'FETCH_SUCCESS', payload: { data } });
-      } catch (error) {
-        dispatch({ type: 'FETCH_FAIL', payload: 'Error fetching search results.' });
-      }
-    };
-
-    fetchData();
+  const fetchData = useCallback(async () => {
+    try {
+      const { data } = await axios.get(`/products/search?query=${query}`); // Destructure 'data' directly
+      dispatch({ type: 'FETCH_SUCCESS', payload: { data } });
+    } catch (error) {
+      dispatch({ type: 'FETCH_FAIL', payload: 'Error fetching search results.' });
+    }
   }, [query]);
 
-  const { loading, error, results } = state;
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]); // Include fetchData in the dependency array
+
+  const { loading, error, data } = state; // Destructure 'data' directly
 
   return (
     <div>
@@ -49,8 +51,8 @@ const SearchScreen = ({ query }) => {
         <p>{error}</p>
       ) : (
         <div className="search-results">
-          {Array.isArray(results) ? (
-            results.map((result) => (
+          {data?.length ? (
+            data.map((result) => (
               <div key={result._id} className="search-result">
                 <img src={`/uploads/products/${result.image}`} alt={result.name} />
                 <h3>{result.name}</h3>
