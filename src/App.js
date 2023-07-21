@@ -22,7 +22,7 @@ import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import Button from "react-bootstrap/Button";
 import { getError } from "./utils";
-import axios from "axios";
+// import axios from "axios";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
 import EditShippingAddress from "./screens/EditShippingAddress";
@@ -41,16 +41,11 @@ function App() {
   };
 
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`/products/categories`);
-        const { data: dataTag } = await axios.get(`/products`);
-        setCategories(data);
-        setTags(dataTag);
+        // const { data } = await axios.get(`/products`);
       } catch (err) {
         toast.error(getError(err));
       }
@@ -128,36 +123,6 @@ function App() {
               : "side-navbar d-flex justify-content-between flex-wrap flex-column"
           }
         >
-          <Nav className="flex-column text-white w-100 p-2">
-            <Nav.Item>
-              <strong>Categories</strong>
-            </Nav.Item>
-            {categories?.map((category) => (
-              <Nav.Item key={category}>
-                <LinkContainer
-                  to={{ pathname: "/search", search: `?category=${category}` }}
-                  // to={`/search/category=${category}`}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  <Nav.Link>{category}</Nav.Link>
-                </LinkContainer>
-              </Nav.Item>
-            ))}
-            <Nav.Item>
-              <strong>Tags</strong>
-            </Nav.Item>
-            {tags?.map((tag) => (
-              <Nav.Item key={tag}>
-                <LinkContainer
-                  to={{ pathname: "/search", search: `?tag=${tag}` }}
-                  // to={`/search/category=${category}`}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  <Nav.Link>{tag}</Nav.Link>
-                </LinkContainer>
-              </Nav.Item>
-            ))}
-          </Nav>
         </div>
         <main>
           <Container className="mt-3">
