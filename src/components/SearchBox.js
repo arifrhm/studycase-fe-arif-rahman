@@ -29,6 +29,7 @@ export default function SearchBox() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(`qyery : ${query}`);
     navigate(query ? `/products/search?query=${query}` : "/search");
   }
   return (

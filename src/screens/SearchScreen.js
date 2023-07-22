@@ -10,14 +10,13 @@ const SearchScreen = () => {
   };
 
   const searchParams = new URLSearchParams(document.location.search);
-  const query = searchParams.get('query');
 
   const reducer = (state, action) => {
     switch (action.type) {
       case 'FETCH_REQUEST':
         return { ...state, loading: true };
       case 'FETCH_SUCCESS':
-        return { ...state, loading: false, data: action.payload.data }; // Renamed 'results' to 'data'
+        return { ...state, loading: false, data: action.payload?.data?.data }; // Renamed 'results' to 'data'
       case 'FETCH_FAIL':
         return { ...state, loading: false, error: action.payload };
       default:
@@ -27,18 +26,20 @@ const SearchScreen = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const { data } = await axios.get(`/products/search?query=${query}`); // Destructure 'data' directly
-      dispatch({ type: 'FETCH_SUCCESS', payload: { data } });
-    } catch (error) {
-      dispatch({ type: 'FETCH_FAIL', payload: 'Error fetching search results.' });
-    }
-  }, [query]);
-
   useEffect(() => {
+    console.log('data');
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/products/search?query=${searchParams.get('query')}`);
+        const data = response.data;
+        dispatch({ type: 'FETCH_SUCCESS', payload: { data } });
+      } catch (error) {
+        dispatch({ type: 'FETCH_FAIL', payload: 'Error fetching search results.' });
+      }
+    };
+
     fetchData();
-  }, [fetchData]); // Include fetchData in the dependency array
+  }, [searchParams.get('query')]);
 
   const { loading, error, data } = state; // Destructure 'data' directly
 
