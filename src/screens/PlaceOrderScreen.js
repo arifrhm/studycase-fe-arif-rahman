@@ -51,7 +51,6 @@ function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: "CREATE_REQUEST" });
-
       const { data } = await axios.post(
         "/orders",
         {
@@ -65,7 +64,7 @@ function PlaceOrderScreen() {
         },
         {
           headers: {
-            authorization: `Bearer ${userInfo.token}`,
+            authorization: `Bearer ${userInfo.data.token}`,
           },
         }
       );
