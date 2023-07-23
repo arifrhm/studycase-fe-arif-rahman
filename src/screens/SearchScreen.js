@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import LoadingBox from '../components/LoadingBox';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchScreen = () => {
   const initialState = {
@@ -9,16 +10,16 @@ const SearchScreen = () => {
     data: [], // Renamed 'results' to 'data' for consistency
   };
 
-  const searchParams = new URLSearchParams(document.location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const reducer = (state, action) => {
     switch (action.type) {
       case 'FETCH_REQUEST':
         return { ...state, loading: true };
       case 'FETCH_SUCCESS':
-        return { ...state, loading: false, data: action.payload?.data?.data }; // Renamed 'results' to 'data'
+        return { ...state, loading: false, data: action.payload?.data?.data , error:null}; // Renamed 'results' to 'data'
       case 'FETCH_FAIL':
-        return { ...state, loading: false, error: action.payload };
+        return { ...state, loading: false, error: action.payload , data:null};
       default:
         return state;
     }
