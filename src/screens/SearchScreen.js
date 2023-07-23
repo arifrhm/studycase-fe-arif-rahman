@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import LoadingBox from '../components/LoadingBox';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';

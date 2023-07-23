@@ -71,7 +71,7 @@ function PlaceOrderScreen() {
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       localStorage.removeItem("cartItems");
-      navigate(`/order/${data.order._id}`);
+      console.log(data.data._id);
     } catch (err) {
       dispatch({ type: "CREATE_FAIL" });
       toast.error(getError(err));

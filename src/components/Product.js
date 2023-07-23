@@ -18,7 +18,7 @@ const Product = (props) => {
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/products/${item._id}`);
+    const { data } = await axios.get(`/products/byid/${item._id}`);
     if (data.countInStocke < quantity) {
       window.alert("Maaf, produk tidak tersedia");
       return;
@@ -31,11 +31,11 @@ const Product = (props) => {
 
   return (
     <Card>
-      <Link to={`/product/${product.slug}`}>
+      <Link to={`/products/detail/${product._id}`}>
         <img src={`/uploads/products/${product.image}`} className="card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product.slug}`} className="linkon">
+        <Link to={`/products/detail/${product._id}`} className="linkon">
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Link

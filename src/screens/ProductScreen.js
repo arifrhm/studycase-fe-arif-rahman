@@ -31,7 +31,7 @@ const reducer = (state, action) => {
 function ProductScreen() {
   const navigate = useNavigate();
   const params = useParams();
-  const { slug } = params;
+  const { id } = params;
 
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
@@ -43,21 +43,21 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get(`/products/slug/${slug}`);
+        const result = await axios.get(`/products/byid/${id}`);
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
     fetchData();
-  }, [slug]);
+  }, [id]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/products/${product._id}`);
+    const { data } = await axios.get(`/products/byid/${id}`);
     if (data.countInStocke < quantity) {
       window.alert("Maaf, produk tidak tersedia");
       return;
@@ -79,17 +79,17 @@ function ProductScreen() {
         <Col md={6}>
           <img
             className="img-large"
-            alt={product.name}
-            src={`/uploads/products/${product.image}`}
+            alt={product.data.name}
+            src={`/uploads/products/${product.data.image}`}
           ></img>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Helmet>
-                <title>{product.name}</title>
+                <title>{product.data.name}</title>
               </Helmet>
-              <h1>{product.name}</h1>
+              <h1>{product.data.name}</h1>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
@@ -97,12 +97,12 @@ function ProductScreen() {
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <p>Rp{product.price}</p>
-            </ListGroup.Item>
+            {/* <ListGroup.Item>
+              <p>Rp{product.data.price}</p>
+            </ListGroup.Item> */}
             <ListGroup.Item>
               Description:
-              <p>{product.description}</p>
+              <p>{product.data.description}</p>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -113,10 +113,10 @@ function ProductScreen() {
                 <ListGroupItem>
                   <Row>
                     <Col>Price:</Col>
-                    <Col>Rp{product.price}</Col>
+                    <Col>Rp{product.data.price}</Col>
                   </Row>
                 </ListGroupItem>
-                <ListGroupItem>
+                {/* <ListGroupItem>
                   <Row>
                     <Col>Status</Col>
                     <Col>
@@ -127,7 +127,7 @@ function ProductScreen() {
                       )}
                     </Col>
                   </Row>
-                </ListGroupItem>
+                </ListGroupItem> */}
                 <ListGroupItem>
                   {product.countInStocke > 0 && (
                     <div className="d-grid">

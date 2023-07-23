@@ -127,14 +127,15 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/products/" element={<ProductScreen />} />
+              <Route path="/products/detail/:id" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/products/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<InvoiceScreen />} />
+              <Route path="/orders/:id" element={<InvoiceScreen />} />
               <Route
                 path="/orderhistory"
                 element={<OrderHistoryScreen />}

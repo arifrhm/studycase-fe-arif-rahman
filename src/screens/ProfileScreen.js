@@ -8,7 +8,7 @@ import { getError } from "../utils";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const reducer = (state, action) => {
   switch (action.type) {
